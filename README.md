@@ -19,3 +19,5 @@ Dilerseniz öncesinde test etmek için bu alanlara, banka tarafından verilen si
 Bu durumda dosyaların arasında bulunan "TL Göster" isimli eklentiyi kullanabilirsiniz. Bu eklentiyi yükleyip aktif ettikten sonra yönetim panelinde "TL Göster" isminde bir ayar menüsü çıkacak. Bu sayfadan Euro ve Dolar için çevrimde kullanılacak kuru kendiniz belirleyebilirsiniz. Dilerseniz aynı sayfanın altındaki "Kurları Güncelle" butonu ile TCMB üzerinden güncel kurları çekebilirsiniz.
 
 Şu an bu eklenti sadece Euro ve Dolar için yapıldı. Diğer para birimleri için yaptığınız güncellemeleri Pull Request olarak gönderebilirsiniz.
+
+![Kuveytpos](https://raw.githubusercontent.com/muratcesmecioglu/Kuveytturk-POS-Plugin/master/Kuveytpos.png)
