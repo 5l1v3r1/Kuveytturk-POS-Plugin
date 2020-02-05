@@ -9,7 +9,7 @@ Kuveyttürk FreePos sistemi Türk Lirası kabul eder. Bu yüzden WooCommerce'in 
 Bunun için paylaştığım diğer eklenti sayesinde örneğin dolar fiyatlı çalışan siteniz üzerinden Türk Lirası olarak ödeme almanız mümkün hale geliyor.
 
 ### Nasıl Kullanılır?
-İndirdiğiniz """kuveytpos""" klasörünü web sitesindeki Wordpress'in plugins klasörüne atın.
+İndirdiğiniz **kuveytpos** klasörünü web sitesindeki Wordpress'in plugins klasörüne atın.
 Eklentiyi aktif ettikten sonra, WooCommerce ayarlarındaki Ödeme sekmesinde "Kuveyttürk Sanal POS Sistemi" adında yeni bir ödeme yöntemi çıkacak. Bu yöntemi aktif edip yanında "Yönet" butonuna tıklayın.
 
 Açılan sayfada; bankanın sisteminden oluşturduğun API kullanıcı adı ve şifresini girin, bankanın size gönderdiği dökümantasyon dosyasındaki URL adreslerini girin ve ayarları kaydedin.
