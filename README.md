@@ -22,4 +22,5 @@ Bu durumda dosyaların arasında bulunan "TL Göster" isimli eklentiyi kullanabi
 
 Şu an bu eklenti sadece Euro ve Dolar için yapıldı. Diğer para birimleri için yaptığınız güncellemeleri Pull Request olarak gönderebilirsiniz.
 
+### Resimler
 ![Kuveytpos](https://raw.githubusercontent.com/muratcesmecioglu/Kuveytturk-POS-Plugin/master/Kuveytpos.png)
