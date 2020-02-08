@@ -84,6 +84,7 @@ function kuveytpos_init_gateway_class(){
       $this->api_pass = $this->settings['api_pass'];
       $this->url_paygate = $this->settings['url_paygate'];
       $this->url_provisiongate = $this->settings['url_provisiongate'];
+      $this->hata_donus = $this->settings['hata_donus'];
 
       add_action('woocommerce_api_' . $this->id, array( &$this, 'posodeme_callback') ); //Bankadan callback fonksiyonu
       add_action('woocommerce_update_options_payment_gateways_' . $this->id, array( &$this, 'process_admin_options' ) ); //Admin sayfası kayıt
@@ -144,7 +145,16 @@ function kuveytpos_init_gateway_class(){
                 'url_provisiongate' => array(
                     'title' => 'Sanal Pos 3D Model Ödeme Onaylama Adresi',
                     'type' => 'text',
-                    'description' =>  'Bankanın verdiği ödeme onaylama adresi')
+                    'description' =>  'Bankanın verdiği ödeme onaylama adresi'),
+
+                'hata_donus' => array(
+                    'title' => 'Hata Dönüş Sayfası',
+                    'type' => 'select',
+                    'options' => array(
+                      'sepet' => 'Sepet',
+                      'direkt' => 'Ödeme - Fatura Bilgileri Yok',
+                      'odeme' => 'Ödeme - Fatura Bilgileri Var')
+                    )
       );
     } //
     
@@ -170,7 +180,7 @@ function kuveytpos_init_gateway_class(){
       <p class="form-row form-row-wide" id="cc_numara" data-priority="">
         <label for="cc_numara" class="">Kart Numarası <abbr class="required" title="gerekli">*</abbr></label>
         <span class="woocommerce-input-wrapper">
-          <input type="text" class="input-text " name="cc_numara" id="cc_numara" placeholder="" value="" pattern="\d+" maxlength="16" required>
+          <input type="text" class="input-text " name="cc_numara" id="cc_numara" placeholder="" value="" pattern="\d*" maxlength="19" required>
         </span>
       </p>
       
@@ -219,7 +229,7 @@ function kuveytpos_init_gateway_class(){
       <p class="form-row form-row-wide" id="cc_cvv" data-priority="">
         <label for="cc_cvv" class="">CVV2<abbr class="required" title="gerekli">*</abbr></label>
         <span class="woocommerce-input-wrapper">
-          <input type="text" class="input-text " name="cc_cvv" id="cc_cvv" pattern="[0-9]{3}" maxlength="3" placeholder="" value="" required>
+          <input type="text" class="input-text " name="cc_cvv" id="cc_cvv" pattern="[0-9]{3,4}" maxlength="4" placeholder="" value="" required>
         </span>
       </p>
       
@@ -438,6 +448,8 @@ function kuveytpos_init_gateway_class(){
         $UserName = $this->api_user; // Web Yönetim ekranlarından olusturulan api rollü kullanici
         $Password = $this->api_pass; // Web Yönetim ekranlarından olusturulan api rollü kullanici şifre
 
+        $donus_sayfasi = $this->hata_donus; //Hata dönüş hedefi
+
         $HashedPassword = base64_encode(sha1($Password,"ISO-8859-9")); //md5($Password);
         $HashData = base64_encode(sha1($MerchantId.$MerchantOrderId.$Amount.$UserName.$HashedPassword , "ISO-8859-9"));
 
@@ -491,14 +503,30 @@ function kuveytpos_init_gateway_class(){
           //echo "Banka ödemesinde hata yanıtı geldi";
           $order->add_order_note( 'Ödeme Banka Hatası: ('.$otorizecevap->ResponseCode.') ' . $otorizecevap->ResponseMessage); //Sipariş Takibi
           wc_add_notice( 'Ödeme Sırasında Banka Hata Mesajı: ' . $otorizecevap->ResponseMessage, 'error' ); //Sonuç sayfasında gösterilecek mesaj
-          wp_safe_redirect( ywraq_get_accepted_quote_page( $order ) ); //Müşteriyi ödeme sayfasına yönlendir
+
+          if ($donus_sayfasi == 'sepet') {
+            wp_safe_redirect( $woocommerce->cart->get_cart_url() ); //Müşteriyi sepete yönlendir
+          } elseif ($donus_sayfasi == 'direkt') {
+            wp_safe_redirect( $order->get_checkout_payment_url( false ) ); //Müşteriyi ödeme sayfasına yönlendir - Fatura bilgileri yok
+          } elseif ($donus_sayfasi == 'odeme') {
+            wp_safe_redirect( $woocommerce->cart->get_checkout_url() ); //Müşteriyi ödeme sayfasına yönlendir - Fatura bilgileri var
+          }
+
         }
       } else { //Banka kart doğrulaması sırasında hata yanıtı geldi
         //echo "Banka kart doğrulaması sırasında hata yanıtı geldi";
         $order = new WC_Order( intval($xxml->MerchantOrderId) ); //Siparişi bul
         $order->add_order_note( 'Ödeme Sırasında Banka Hata Mesajı: ('.$xxml->ResponseCode.') ' . $xxml->ResponseMessage); //Sipariş Takibi
         wc_add_notice( 'Banka Hata Mesaji: ' . $xxml->ResponseMessage, 'error' ); //Sonuç sayfasında gösterilecek mesaj
-        wp_safe_redirect( ywraq_get_accepted_quote_page( $order ) ); //Müşteriyi ödeme sayfasına yönlendir
+        
+        if ($donus_sayfasi == 'sepet') {
+            wp_safe_redirect( $woocommerce->cart->get_cart_url() ); //Müşteriyi sepete yönlendir
+          } elseif ($donus_sayfasi == 'direkt') {
+            wp_safe_redirect( $order->get_checkout_payment_url( false ) ); //Müşteriyi ödeme sayfasına yönlendir - Fatura bilgileri yok
+          } elseif ($donus_sayfasi == 'odeme') {
+            wp_safe_redirect( $woocommerce->cart->get_checkout_url() ); //Müşteriyi ödeme sayfasına yönlendir - Fatura bilgileri var
+          }
+
       }
       die();
     } //
