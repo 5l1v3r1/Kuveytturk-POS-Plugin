@@ -7,7 +7,7 @@ Wordpress üzerine kurulan WooCommerce e-ticaret sistemi için, Kuveyttürk bank
 ### Öncelikle Bilinmesi Gerekenler
 Kuveyttürk FreePos sistemi Türk Lirası kabul eder. Bu yüzden WooCommerce'in ayarlarından para birimi olarak TL seçilmesi gerekir. Farklı bir para biriminde çalışan siteniz varsa, ödeme alınırken, toplam tutarın TL cinsine çevrilmesi gereklidir.
 
-Bunun için paylaştığım [TL Göster](#) eklentisi sayesinde örneğin dolar fiyatlı çalışan siteniz üzerinden Türk Lirası olarak ödeme almanız mümkün hale geliyor.
+Bunun için paylaştığım [TL Göster](https://github.com/muratcesmecioglu/TL-Goster) eklentisi sayesinde örneğin dolar fiyatlı çalışan siteniz üzerinden Türk Lirası olarak ödeme almanız mümkün hale geliyor.
 
 ### Nasıl Kullanılır?
 İndirdiğiniz **kuveytpos** klasörünü web sitenizdeki Wordpress'in plugins klasörüne atın.
@@ -29,7 +29,7 @@ v1.0
 ### Sıkça Sorulan Sorular
 
 ##### TL Harici Bir Para Birimi Kullanıyorum
-Bu eklenti, kendi yazdığım [TL Göster](#) isimli eklenti ile uyumludur. Bu eklentiyi yükleyip aktif ettikten sonra yönetim panelinde "TL Göster" isminde bir ayar menüsü çıkacak. Bu sayfadan Euro ve Dolar için çevrimde kullanılacak kuru kendiniz belirleyebilirsiniz. Dilerseniz aynı sayfanın altındaki "Kurları Güncelle" butonu ile TCMB üzerinden güncel kurları çekebilirsiniz.
+Bu eklenti, kendi yazdığım [TL Göster](https://github.com/muratcesmecioglu/TL-Goster) isimli eklenti ile uyumludur. Bu eklentiyi yükleyip aktif ettikten sonra yönetim panelinde "TL Göster" isminde bir ayar menüsü çıkacak. Bu sayfadan Euro ve Dolar için çevrimde kullanılacak kuru kendiniz belirleyebilirsiniz. Dilerseniz aynı sayfanın altındaki "Kurları Güncelle" butonu ile TCMB üzerinden güncel kurları çekebilirsiniz.
 
 Şu an bu eklenti sadece Euro ve Dolar için yapıldı. Diğer para birimleri için yaptığınız güncellemeleri Pull Request olarak gönderebilirsiniz.
 
